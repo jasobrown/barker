@@ -16,7 +16,7 @@ import org.openjdk.jmh.annotations.State;
  */
 @State(Scope.Thread)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
-@BenchmarkMode(Mode.SampleTime)
+@BenchmarkMode(Mode.Throughput)
 public class CountDownLatchBenchmark
 {
     private CountDownLatch latch;
