@@ -2,8 +2,9 @@ package jmh.barker;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.GenerateMicroBenchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
@@ -28,19 +29,19 @@ public class CountDownLatchBenchmark
         latch.countDown();
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public boolean testZeroAwait() throws InterruptedException
     {
         return latch.await(1, TimeUnit.MILLISECONDS);
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public long testGetCount()
     {
         return latch.getCount();
     }
 
-    @GenerateMicroBenchmark
+    @Benchmark
     public Thread testCurrentThread()
     {
         return Thread.currentThread();
