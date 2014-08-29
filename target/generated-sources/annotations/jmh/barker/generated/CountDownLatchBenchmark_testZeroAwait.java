@@ -10,24 +10,26 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 import org.openjdk.jmh.annotations.CompilerControl;
-import org.openjdk.jmh.logic.InfraControl;
-import org.openjdk.jmh.logic.ThreadControl;
-import org.openjdk.jmh.logic.BlackHole;
-import org.openjdk.jmh.logic.results.Result;
-import org.openjdk.jmh.logic.results.ThroughputResult;
-import org.openjdk.jmh.logic.results.AverageTimeResult;
-import org.openjdk.jmh.logic.results.SampleTimeResult;
-import org.openjdk.jmh.logic.results.SingleShotResult;
-import org.openjdk.jmh.util.internal.SampleBuffer;
+import org.openjdk.jmh.runner.InfraControl;
+import org.openjdk.jmh.infra.ThreadParams;
+import org.openjdk.jmh.infra.Blackhole;
+import org.openjdk.jmh.results.Result;
+import org.openjdk.jmh.results.ThroughputResult;
+import org.openjdk.jmh.results.AverageTimeResult;
+import org.openjdk.jmh.results.SampleTimeResult;
+import org.openjdk.jmh.results.SingleShotResult;
+import org.openjdk.jmh.util.SampleBuffer;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.logic.results.RawResults;
-import org.openjdk.jmh.logic.results.ResultRole;
+import org.openjdk.jmh.results.RawResults;
+import org.openjdk.jmh.results.ResultRole;
 import java.lang.reflect.Field;
+import org.openjdk.jmh.infra.BenchmarkParams;
+import org.openjdk.jmh.infra.IterationParams;
 
 @Generated("org.openjdk.jmh.generators.core.BenchmarkGenerator")
 public final class CountDownLatchBenchmark_testZeroAwait {
@@ -50,10 +52,10 @@ public final class CountDownLatchBenchmark_testZeroAwait {
     private boolean p15, p15_1, p15_2, p15_3, p15_4, p15_5, p15_6, p15_7, p15_8, p15_9, p15_10, p15_11, p15_12, p15_13, p15_14, p15_15;
     int startRndMask;
 
-    public Collection<? extends Result> testZeroAwait_Throughput(InfraControl control, ThreadControl threadControl) throws Throwable {
-        if (threadControl.subgroup == 0) {
-            BlackHole_1_jmh l_blackhole1_1 = _jmh_tryInit_f_blackhole1_1(control);
-            CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0 = _jmh_tryInit_f_countdownlatchbenchmark0_0(control);
+    public Collection<? extends Result> testZeroAwait_Throughput(InfraControl control, ThreadParams threadParams) throws Throwable {
+        if (threadParams.getSubgroupIndex() == 0) {
+            Blackhole_1_jmh l_blackhole1_1 = _jmh_tryInit_f_blackhole1_1(control, threadParams);
+            CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0 = _jmh_tryInit_f_countdownlatchbenchmark0_0(control, threadParams);
 
             control.preSetup();
             if (!l_blackhole1_1.readyIteration) {
@@ -66,8 +68,9 @@ public final class CountDownLatchBenchmark_testZeroAwait {
                 l_blackhole1_1.consume(l_countdownlatchbenchmark0_0.testZeroAwait());
             }
 
-            RawResults res = new RawResults(1L);
-            testZeroAwait_Throughput_measurementLoop(control, res, l_countdownlatchbenchmark0_0, l_blackhole1_1);
+            RawResults res = new RawResults(control.benchmarkParams.getOpsPerInvocation());
+            testZeroAwait_thrpt_jmhLoop(control, res, l_countdownlatchbenchmark0_0, l_blackhole1_1);
+            res.operations /= control.iterationParams.getBatchSize();
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
@@ -89,15 +92,13 @@ public final class CountDownLatchBenchmark_testZeroAwait {
                 f_blackhole1_1 = null;
             }
             Collection<Result> results = new ArrayList<Result>();
-            TimeUnit tu = (control.timeUnit != null) ? control.timeUnit : TimeUnit.MICROSECONDS;
-            results.add(new ThroughputResult(ResultRole.PRIMARY, "testZeroAwait", res.getOperations(), res.getTime(), tu));
+            results.add(new ThroughputResult(ResultRole.PRIMARY, "testZeroAwait", res.getOperations(), res.getTime(), control.benchmarkParams.getTimeUnit()));
             return results;
         } else
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
-    public void testZeroAwait_Throughput_measurementLoop(InfraControl control, RawResults result, CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0, BlackHole_1_jmh l_blackhole1_1) throws Throwable {
+    public void testZeroAwait_thrpt_jmhLoop(InfraControl control, RawResults result, CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0, Blackhole_1_jmh l_blackhole1_1) throws Throwable {
         long operations = 0;
         long realTime = 0;
         result.startTime = System.nanoTime();
@@ -111,10 +112,10 @@ public final class CountDownLatchBenchmark_testZeroAwait {
     }
 
 
-    public Collection<? extends Result> testZeroAwait_AverageTime(InfraControl control, ThreadControl threadControl) throws Throwable {
-        if (threadControl.subgroup == 0) {
-            BlackHole_1_jmh l_blackhole1_1 = _jmh_tryInit_f_blackhole1_1(control);
-            CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0 = _jmh_tryInit_f_countdownlatchbenchmark0_0(control);
+    public Collection<? extends Result> testZeroAwait_AverageTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+        if (threadParams.getSubgroupIndex() == 0) {
+            Blackhole_1_jmh l_blackhole1_1 = _jmh_tryInit_f_blackhole1_1(control, threadParams);
+            CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0 = _jmh_tryInit_f_countdownlatchbenchmark0_0(control, threadParams);
 
             control.preSetup();
             if (!l_blackhole1_1.readyIteration) {
@@ -127,8 +128,9 @@ public final class CountDownLatchBenchmark_testZeroAwait {
                 l_blackhole1_1.consume(l_countdownlatchbenchmark0_0.testZeroAwait());
             }
 
-            RawResults res = new RawResults(1L);
-            testZeroAwait_AverageTime_measurementLoop(control, res, l_countdownlatchbenchmark0_0, l_blackhole1_1);
+            RawResults res = new RawResults(control.benchmarkParams.getOpsPerInvocation());
+            testZeroAwait_avgt_jmhLoop(control, res, l_countdownlatchbenchmark0_0, l_blackhole1_1);
+            res.operations /= control.iterationParams.getBatchSize();
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
@@ -150,15 +152,13 @@ public final class CountDownLatchBenchmark_testZeroAwait {
                 f_blackhole1_1 = null;
             }
             Collection<Result> results = new ArrayList<Result>();
-            TimeUnit tu = (control.timeUnit != null) ? control.timeUnit : TimeUnit.MICROSECONDS;
-            results.add(new AverageTimeResult(ResultRole.PRIMARY, "testZeroAwait", res.getOperations(), res.getTime(), tu));
+            results.add(new AverageTimeResult(ResultRole.PRIMARY, "testZeroAwait", res.getOperations(), res.getTime(), control.benchmarkParams.getTimeUnit()));
             return results;
         } else
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
-    public void testZeroAwait_AverageTime_measurementLoop(InfraControl control, RawResults result, CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0, BlackHole_1_jmh l_blackhole1_1) throws Throwable {
+    public void testZeroAwait_avgt_jmhLoop(InfraControl control, RawResults result, CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0, Blackhole_1_jmh l_blackhole1_1) throws Throwable {
         long operations = 0;
         long realTime = 0;
         result.startTime = System.nanoTime();
@@ -172,10 +172,10 @@ public final class CountDownLatchBenchmark_testZeroAwait {
     }
 
 
-    public Collection<? extends Result> testZeroAwait_SampleTime(InfraControl control, ThreadControl threadControl) throws Throwable {
-        if (threadControl.subgroup == 0) {
-            BlackHole_1_jmh l_blackhole1_1 = _jmh_tryInit_f_blackhole1_1(control);
-            CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0 = _jmh_tryInit_f_countdownlatchbenchmark0_0(control);
+    public Collection<? extends Result> testZeroAwait_SampleTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+        if (threadParams.getSubgroupIndex() == 0) {
+            Blackhole_1_jmh l_blackhole1_1 = _jmh_tryInit_f_blackhole1_1(control, threadParams);
+            CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0 = _jmh_tryInit_f_countdownlatchbenchmark0_0(control, threadParams);
 
             control.preSetup();
             if (!l_blackhole1_1.readyIteration) {
@@ -189,8 +189,9 @@ public final class CountDownLatchBenchmark_testZeroAwait {
             }
 
             int targetSamples = (int) (control.getDuration(TimeUnit.MILLISECONDS) * 20); // at max, 20 timestamps per millisecond
+        int batchSize = control.iterationParams.getBatchSize();
             SampleBuffer buffer = new SampleBuffer();
-            testZeroAwait_SampleTime_measurementLoop(control, buffer, targetSamples, l_countdownlatchbenchmark0_0, l_blackhole1_1);
+            testZeroAwait_sample_jmhLoop(control, buffer, targetSamples, control.benchmarkParams.getOpsPerInvocation(), batchSize, l_countdownlatchbenchmark0_0, l_blackhole1_1);
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
@@ -212,15 +213,13 @@ public final class CountDownLatchBenchmark_testZeroAwait {
                 f_blackhole1_1 = null;
             }
             Collection<Result> results = new ArrayList<Result>();
-            TimeUnit tu = (control.timeUnit != null) ? control.timeUnit : TimeUnit.MICROSECONDS;
-            results.add(new SampleTimeResult(ResultRole.PRIMARY, "testZeroAwait", buffer, tu));
+            results.add(new SampleTimeResult(ResultRole.PRIMARY, "testZeroAwait", buffer, control.benchmarkParams.getTimeUnit()));
             return results;
         } else
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
-    public void testZeroAwait_SampleTime_measurementLoop(InfraControl control, SampleBuffer buffer, int targetSamples, CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0, BlackHole_1_jmh l_blackhole1_1) throws Throwable {
+    public void testZeroAwait_sample_jmhLoop(InfraControl control, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0, Blackhole_1_jmh l_blackhole1_1) throws Throwable {
         long realTime = 0;
         int rnd = (int)System.nanoTime();
         int rndMask = startRndMask;
@@ -232,9 +231,12 @@ public final class CountDownLatchBenchmark_testZeroAwait {
             if (sample) {
                 time = System.nanoTime();
             }
-            l_blackhole1_1.consume(l_countdownlatchbenchmark0_0.testZeroAwait());
+            for (int b = 0; b < batchSize; b++) {
+                if (control.volatileSpoiler) return;
+                l_blackhole1_1.consume(l_countdownlatchbenchmark0_0.testZeroAwait());
+            }
             if (sample) {
-                buffer.add(System.nanoTime() - time);
+                buffer.add((System.nanoTime() - time) / opsPerInv);
                 if (currentStride++ > targetSamples) {
                     buffer.half();
                     currentStride = 0;
@@ -246,12 +248,10 @@ public final class CountDownLatchBenchmark_testZeroAwait {
     }
 
 
-    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
-    public Collection<? extends Result> testZeroAwait_SingleShotTime(InfraControl control, ThreadControl threadControl) throws Throwable {
-        long realTime = 0;
-        if (threadControl.subgroup == 0) {
-            BlackHole_1_jmh l_blackhole1_1 = _jmh_tryInit_f_blackhole1_1(control);
-            CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0 = _jmh_tryInit_f_countdownlatchbenchmark0_0(control);
+    public Collection<? extends Result> testZeroAwait_SingleShotTime(InfraControl control, ThreadParams threadParams) throws Throwable {
+        if (threadParams.getSubgroupIndex() == 0) {
+            Blackhole_1_jmh l_blackhole1_1 = _jmh_tryInit_f_blackhole1_1(control, threadParams);
+            CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0 = _jmh_tryInit_f_countdownlatchbenchmark0_0(control, threadParams);
 
             control.preSetup();
             if (!l_blackhole1_1.readyIteration) {
@@ -259,12 +259,9 @@ public final class CountDownLatchBenchmark_testZeroAwait {
                 l_blackhole1_1.readyIteration = true;
             }
 
-            long time1 = System.nanoTime();
-            int batchSize = control.batchSize;
-            for (int b = 0; b < batchSize; b++) {
-                l_blackhole1_1.consume(l_countdownlatchbenchmark0_0.testZeroAwait());
-            }
-            long time2 = System.nanoTime();
+            RawResults res = new RawResults(control.benchmarkParams.getOpsPerInvocation());
+        int batchSize = control.iterationParams.getBatchSize();
+            testZeroAwait_ss_jmhStub(control, batchSize, res, l_countdownlatchbenchmark0_0, l_blackhole1_1);
                 control.preTearDown();
             if (l_blackhole1_1.readyIteration) {
                 l_blackhole1_1.readyIteration = false;
@@ -278,18 +275,29 @@ public final class CountDownLatchBenchmark_testZeroAwait {
                 f_blackhole1_1 = null;
             }
             Collection<Result> results = new ArrayList<Result>();
-            TimeUnit tu = (control.timeUnit != null) ? control.timeUnit : TimeUnit.MICROSECONDS;
-            results.add(new SingleShotResult(ResultRole.PRIMARY, "testZeroAwait", (realTime > 0) ? realTime : (time2 - time1), tu));
+            results.add(new SingleShotResult(ResultRole.PRIMARY, "testZeroAwait", res.getTime(), control.benchmarkParams.getTimeUnit()));
             return results;
         } else
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
+
+    public void testZeroAwait_ss_jmhStub(InfraControl control, int batchSize, RawResults result, CountDownLatchBenchmark_1_jmh l_countdownlatchbenchmark0_0, Blackhole_1_jmh l_blackhole1_1) throws Throwable {
+        long realTime = 0;
+        result.startTime = System.nanoTime();
+        for (int b = 0; b < batchSize; b++) {
+            if (control.volatileSpoiler) return;
+            l_blackhole1_1.consume(l_countdownlatchbenchmark0_0.testZeroAwait());
+        }
+        result.stopTime = System.nanoTime();
+        result.realTime = realTime;
+    }
+
     
-    BlackHole_1_jmh f_blackhole1_1;
+    Blackhole_1_jmh f_blackhole1_1;
     
-    BlackHole_1_jmh _jmh_tryInit_f_blackhole1_1(InfraControl control) throws Throwable {
+    Blackhole_1_jmh _jmh_tryInit_f_blackhole1_1(InfraControl control, ThreadParams threadParams) throws Throwable {
         if (f_blackhole1_1 == null) {
-            BlackHole_1_jmh val = new BlackHole_1_jmh();
+            Blackhole_1_jmh val = new Blackhole_1_jmh();
             val.readyTrial = true;
             f_blackhole1_1 = val;
         }
@@ -298,7 +306,7 @@ public final class CountDownLatchBenchmark_testZeroAwait {
     
     CountDownLatchBenchmark_1_jmh f_countdownlatchbenchmark0_0;
     
-    CountDownLatchBenchmark_1_jmh _jmh_tryInit_f_countdownlatchbenchmark0_0(InfraControl control) throws Throwable {
+    CountDownLatchBenchmark_1_jmh _jmh_tryInit_f_countdownlatchbenchmark0_0(InfraControl control, ThreadParams threadParams) throws Throwable {
         if (f_countdownlatchbenchmark0_0 == null) {
             CountDownLatchBenchmark_1_jmh val = new CountDownLatchBenchmark_1_jmh();
             val.setup();
@@ -309,7 +317,7 @@ public final class CountDownLatchBenchmark_testZeroAwait {
     }
 
 
-    static class BlackHole_1_jmh_B1 extends org.openjdk.jmh.logic.BlackHole {
+    static class Blackhole_1_jmh_B1 extends org.openjdk.jmh.infra.Blackhole {
         private boolean pb1_0, pb1_0_1, pb1_0_2, pb1_0_3, pb1_0_4, pb1_0_5, pb1_0_6, pb1_0_7, pb1_0_8, pb1_0_9, pb1_0_10, pb1_0_11, pb1_0_12, pb1_0_13, pb1_0_14, pb1_0_15;
         private boolean pb1_1, pb1_1_1, pb1_1_2, pb1_1_3, pb1_1_4, pb1_1_5, pb1_1_6, pb1_1_7, pb1_1_8, pb1_1_9, pb1_1_10, pb1_1_11, pb1_1_12, pb1_1_13, pb1_1_14, pb1_1_15;
         private boolean pb1_2, pb1_2_1, pb1_2_2, pb1_2_3, pb1_2_4, pb1_2_5, pb1_2_6, pb1_2_7, pb1_2_8, pb1_2_9, pb1_2_10, pb1_2_11, pb1_2_12, pb1_2_13, pb1_2_14, pb1_2_15;
@@ -328,28 +336,28 @@ public final class CountDownLatchBenchmark_testZeroAwait {
         private boolean pb1_15, pb1_15_1, pb1_15_2, pb1_15_3, pb1_15_4, pb1_15_5, pb1_15_6, pb1_15_7, pb1_15_8, pb1_15_9, pb1_15_10, pb1_15_11, pb1_15_12, pb1_15_13, pb1_15_14, pb1_15_15;
     }
     
-    static class BlackHole_1_jmh_B2 extends BlackHole_1_jmh_B1 {
+    static class Blackhole_1_jmh_B2 extends Blackhole_1_jmh_B1 {
         public volatile int setupTrialMutex;
         public volatile int tearTrialMutex;
-        public final static AtomicIntegerFieldUpdater setupTrialMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(BlackHole_1_jmh_B2.class, "setupTrialMutex");
-        public final static AtomicIntegerFieldUpdater tearTrialMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(BlackHole_1_jmh_B2.class, "tearTrialMutex");
+        public final static AtomicIntegerFieldUpdater setupTrialMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(Blackhole_1_jmh_B2.class, "setupTrialMutex");
+        public final static AtomicIntegerFieldUpdater tearTrialMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(Blackhole_1_jmh_B2.class, "tearTrialMutex");
     
         public volatile int setupIterationMutex;
         public volatile int tearIterationMutex;
-        public final static AtomicIntegerFieldUpdater setupIterationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(BlackHole_1_jmh_B2.class, "setupIterationMutex");
-        public final static AtomicIntegerFieldUpdater tearIterationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(BlackHole_1_jmh_B2.class, "tearIterationMutex");
+        public final static AtomicIntegerFieldUpdater setupIterationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(Blackhole_1_jmh_B2.class, "setupIterationMutex");
+        public final static AtomicIntegerFieldUpdater tearIterationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(Blackhole_1_jmh_B2.class, "tearIterationMutex");
     
         public volatile int setupInvocationMutex;
         public volatile int tearInvocationMutex;
-        public final static AtomicIntegerFieldUpdater setupInvocationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(BlackHole_1_jmh_B2.class, "setupInvocationMutex");
-        public final static AtomicIntegerFieldUpdater tearInvocationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(BlackHole_1_jmh_B2.class, "tearInvocationMutex");
+        public final static AtomicIntegerFieldUpdater setupInvocationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(Blackhole_1_jmh_B2.class, "setupInvocationMutex");
+        public final static AtomicIntegerFieldUpdater tearInvocationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(Blackhole_1_jmh_B2.class, "tearInvocationMutex");
     
         public boolean readyTrial;
         public boolean readyIteration;
         public boolean readyInvocation;
     }
     
-    static class BlackHole_1_jmh_B3 extends BlackHole_1_jmh_B2 {
+    static class Blackhole_1_jmh_B3 extends Blackhole_1_jmh_B2 {
         private boolean pb3_0, pb3_0_1, pb3_0_2, pb3_0_3, pb3_0_4, pb3_0_5, pb3_0_6, pb3_0_7, pb3_0_8, pb3_0_9, pb3_0_10, pb3_0_11, pb3_0_12, pb3_0_13, pb3_0_14, pb3_0_15;
         private boolean pb3_1, pb3_1_1, pb3_1_2, pb3_1_3, pb3_1_4, pb3_1_5, pb3_1_6, pb3_1_7, pb3_1_8, pb3_1_9, pb3_1_10, pb3_1_11, pb3_1_12, pb3_1_13, pb3_1_14, pb3_1_15;
         private boolean pb3_2, pb3_2_1, pb3_2_2, pb3_2_3, pb3_2_4, pb3_2_5, pb3_2_6, pb3_2_7, pb3_2_8, pb3_2_9, pb3_2_10, pb3_2_11, pb3_2_12, pb3_2_13, pb3_2_14, pb3_2_15;
@@ -368,7 +376,7 @@ public final class CountDownLatchBenchmark_testZeroAwait {
         private boolean pb3_15, pb3_15_1, pb3_15_2, pb3_15_3, pb3_15_4, pb3_15_5, pb3_15_6, pb3_15_7, pb3_15_8, pb3_15_9, pb3_15_10, pb3_15_11, pb3_15_12, pb3_15_13, pb3_15_14, pb3_15_15;
     }
     
-    static final class BlackHole_1_jmh extends BlackHole_1_jmh_B3 {
+    static final class Blackhole_1_jmh extends Blackhole_1_jmh_B3 {
     }
     
     static class CountDownLatchBenchmark_1_jmh_B1 extends jmh.barker.CountDownLatchBenchmark {
