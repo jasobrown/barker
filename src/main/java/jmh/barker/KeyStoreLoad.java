@@ -29,30 +29,15 @@ import org.openjdk.jmh.util.FileUtils;
 public class KeyStoreLoad
 {
     // there's a lovely behavior with jceks files that all aliases are lower-cased
-    private static final String alias = "AES/GCM/NoPadding:1".toLowerCase();
+    private static final String alias = KeyStoreLoader.GCM_KEY;
     private KeyStore store;
     private Map<String, Key> cache;
 
     @Setup
     public void setup()
     {
-        cache = new ConcurrentHashMap<String, Key>();
-
-        FileInputStream inputStream = null;
-        try
-        {
-            inputStream = new FileInputStream("/tmp/keystore");
-            store = KeyStore.getInstance("jceks");
-            store.load(inputStream, "cassandra".toCharArray());
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("couldn't load keystore", e);
-        }
-        finally
-        {
-            FileUtils.safelyClose(inputStream);
-        }
+        cache = new ConcurrentHashMap<>();
+        store = new KeyStoreLoader().store();
     }
 
     @Benchmark
