@@ -23,7 +23,8 @@ import org.openjdk.jmh.annotations.Warmup;
  * compare checksum speeds.
  *
  * First version of this benchmark updated the byte buffer with a new data on each execution.
- * This was overwhelmingly dominating the benchmarking, so I switched to reusing a buffer.
+ * Generating new random data overwhelmingly dominated the benchmarking, although that is a better test of the checksum alg.
+ * Added a method for reusing the same buffer just to see what happens.
  */
 @State(Scope.Benchmark)
 @Warmup(iterations = 4, time = 1, timeUnit = TimeUnit.SECONDS)
@@ -84,6 +85,7 @@ public class ChecksumBench
 
     public static class XXHashChecksum implements Checksum
     {
+        private static final int SEED = 0xCA55ADA;
         private final XXHash32 xxHash;
 
         public XXHashChecksum(XXHash32 xxHash)
@@ -109,7 +111,7 @@ public class ChecksumBench
 
         public void update(byte[] b, int off, int len)
         {
-            curHash = xxHash.hash(b, off, len, 0);
+            curHash = xxHash.hash(b, off, len, SEED);
         }
 
         public long getValue()
