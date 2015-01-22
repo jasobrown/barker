@@ -12,6 +12,10 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
+/**
+ * benchmark, in java, of Chris Westin's for loop optimization in c:
+ * https://www.bookofbrilliantthings.com/blog/revisiting-some-old-for-loop-lore
+ */
 @State(Scope.Thread)
 @Warmup(iterations = 4, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 8, time = 2, timeUnit = TimeUnit.SECONDS)
