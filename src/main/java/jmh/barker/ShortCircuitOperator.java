@@ -18,7 +18,7 @@ import org.openjdk.jmh.annotations.Warmup;
  */
 @State(Scope.Thread)
 @Warmup(iterations = 4, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 8, time = 2, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 16, time = 4, timeUnit = TimeUnit.SECONDS)
 @Fork(4)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @BenchmarkMode(Mode.SampleTime)
