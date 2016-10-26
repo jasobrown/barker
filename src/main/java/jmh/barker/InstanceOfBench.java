@@ -29,6 +29,7 @@ public class InstanceOfBench
 
     private class Dog implements Animal
     {
+        public AnimalType type = AnimalType.DOG;
         public AnimalType getAnimalType()
         {
             return AnimalType.DOG;
@@ -43,12 +44,18 @@ public class InstanceOfBench
         }
     }
 
-    private final Animal dog = new Dog();
+    private final Dog dog = new Dog();
 
     @Benchmark
-    public boolean enumCheck()
+    public boolean enumCheck_ViaMethodCall()
     {
         return dog.getAnimalType() == AnimalType.DOG;
+    }
+
+    @Benchmark
+    public boolean enumCheck_ViaMemberDerefernce()
+    {
+        return dog.type == AnimalType.DOG;
     }
 
     @Benchmark
