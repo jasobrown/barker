@@ -43,43 +43,43 @@ public class BinarySearchVsLinearScan
         highVal = len - 1;
     }
 
-//    @Benchmark
-//    public long lowIndex_LinearScan()
-//    {
-//        long expectedVal = longs[lowVal];
-//        for (int i = 0; i < longs.length; i++)
-//        {
-//            if (longs[i] == expectedVal)
-//                return i;
-//        }
-//        return -1;
-//    }
-//
-//    @Benchmark
-//    public long lowIndex_BinarySearch()
-//    {
-//        long expectedVal = longs[lowVal];
-//        return Arrays.binarySearch(longs, expectedVal);
-//    }
-//
-//    @Benchmark
-//    public long midIndex_LinearScan()
-//    {
-//        long expectedVal = longs[midVal];
-//        for (int i = 0; i < longs.length; i++)
-//        {
-//            if (longs[i] == expectedVal)
-//                return i;
-//        }
-//        return -1;
-//    }
-//
-//    @Benchmark
-//    public long midIndex_BinarySearch()
-//    {
-//        long expectedVal = longs[midVal];
-//        return Arrays.binarySearch(longs, expectedVal);
-//    }
+    @Benchmark
+    public long lowIndex_LinearScan()
+    {
+        long expectedVal = longs[lowVal];
+        for (int i = 0; i < longs.length; i++)
+        {
+            if (longs[i] == expectedVal)
+                return i;
+        }
+        return -1;
+    }
+
+    @Benchmark
+    public long lowIndex_BinarySearch()
+    {
+        long expectedVal = longs[lowVal];
+        return Arrays.binarySearch(longs, expectedVal);
+    }
+
+    @Benchmark
+    public long midIndex_LinearScan()
+    {
+        long expectedVal = longs[midVal];
+        for (int i = 0; i < longs.length; i++)
+        {
+            if (longs[i] == expectedVal)
+                return i;
+        }
+        return -1;
+    }
+
+    @Benchmark
+    public long midIndex_BinarySearch()
+    {
+        long expectedVal = longs[midVal];
+        return Arrays.binarySearch(longs, expectedVal);
+    }
 
     @Benchmark
     public long highIndex_LinearScan()
@@ -96,10 +96,10 @@ public class BinarySearchVsLinearScan
         return -1;
     }
 
-//    @Benchmark
-//    public long highIndex_BinarySearch()
-//    {
-//        long expectedVal = longs[highVal];
-//        return Arrays.binarySearch(longs, expectedVal);
-//    }
+    @Benchmark
+    public long highIndex_BinarySearch()
+    {
+        long expectedVal = longs[highVal];
+        return Arrays.binarySearch(longs, expectedVal);
+    }
 }
