@@ -66,10 +66,15 @@ questions.
           <version>1.2.0</version>
         </dependency>
         <dependency>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+          <version>19.0</version>
+        </dependency>
+        <dependency>
           <groupId>io.netty</groupId>
           <artifactId>netty-all</artifactId>
-          <version>4.1.8.Final</version>
-		  <scope>compile</scope>
+          <version>4.1.28.Final</version>
+	  <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -80,7 +85,7 @@ questions.
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jmh.version>1.19</jmh.version>
+        <jmh.version>1.21</jmh.version>
         <javac.target>1.7</javac.target>
         <uberjar.name>benchmarks</uberjar.name>
     </properties>
@@ -93,8 +98,8 @@ questions.
                 <version>3.1</version>
                 <configuration>
                     <compilerVersion>${javac.target}</compilerVersion>
-                    <source>${javac.target}</source>
-                    <target>${javac.target}</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
             <plugin>
